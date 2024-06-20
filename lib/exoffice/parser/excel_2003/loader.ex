@@ -44,6 +44,7 @@ defmodule Exoffice.Parser.Excel2003.Loader do
   def load(path, sheet \\ nil) do
     with {:ok, file} <- File.open(path, [:read, :binary]),
          {:ok, ole} <- :file.read(file, 8),
+         :ok <- File.close(file),
          true <- ole == OLE.identifier_ole(),
          {:ok, binary} <- File.read(path),
          {:ok, ole} <- OLE.parse_blocks(binary),
